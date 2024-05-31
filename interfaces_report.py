@@ -19,7 +19,9 @@ INTERFACE_ADMIN_DOWN_REASON = [
 ]
 
 # regex to match logical interfaces, or interfaces to exclude from this report
-EXCLUDE_INTF_NAME = "^(ae|bond|dock|ifb|lo|lxc|mgm|npu\d+_vl|oob|po|ssl|tep|tu|ucse|unb|veth|virtu|vl|vxl|wan|\/Common\/)|\.\d+"
+EXCLUDE_INTF_NAME = (
+    "^(ae|bond|dock|ifb|lo|lxc|mgm|npu\d+_vl|oob|po|ssl|tep|tu|ucse|unb|veth|virtu|vl|vxl|wan|\/Common\/)|\.\d+"
+)
 
 load_dotenv(find_dotenv(), override=True)
 
@@ -71,7 +73,11 @@ print(f"Fetching data for {number_of_interfaces} interfaces...", end="", flush=T
 
 interfaces_json = ipf.inventory.interfaces.all(columns=intf_columns, filters=filter_exclude_interfaces)
 
-print(f"\r✅ Done - Fetching data for {number_of_interfaces} interfaces\nProcessing interfaces data...", end="", flush=True)
+print(
+    f"\r✅ Done - Fetching data for {number_of_interfaces} interfaces\nProcessing interfaces data...",
+    end="",
+    flush=True,
+)
 interfaces_dict = {}
 for intf in interfaces_json:
     if intf["hostname"] in interfaces_dict:
@@ -94,7 +100,7 @@ for hostname, data in interfaces_dict.items():
     )
 
     sum_interfaces_used = interfaces_l1up_l2up + interfaces_l1l2unknown + interfaces_l1up_l2down
-    sum_interfaces_unused = interfaces_l1down_l2down # admin_down and err_disabled are already l1&l2 down
+    sum_interfaces_unused = interfaces_l1down_l2down  # admin_down and err_disabled are already l1&l2 down
     interfaces_report.append(
         {
             "hostname": hostname,
@@ -120,11 +126,12 @@ print("\r✅ Done - Processing interfaces data\nGenerating Excel Report...", end
 
 # Generate an excel file with the interfaces report
 import pandas as pd
+
 df_intf_report = pd.DataFrame(interfaces_report)
 df_intf_raw = pd.DataFrame(interfaces_json)
-with pd.ExcelWriter(f"{report_output}.xlsx") as writer:  
-    df_intf_report.to_excel(writer, sheet_name='report', index=False)
-    df_intf_raw.to_excel(writer, sheet_name='intf_raw_data', index=False)
+with pd.ExcelWriter(f"{report_output}.xlsx") as writer:
+    df_intf_report.to_excel(writer, sheet_name="report", index=False)
+    df_intf_raw.to_excel(writer, sheet_name="intf_raw_data", index=False)
 print(f"\r✅ Done - Generating Excel Report, saved to `{report_output}.xlsx`")
 
 # # Export the data to a CSV file
