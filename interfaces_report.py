@@ -30,8 +30,7 @@ ipf_auth = os.getenv("IPF_TOKEN_TS")
 ipf_verify = eval(os.getenv("IPF_VERIFY", "False").title())
 report_output = os.getenv("REPORT_OUTPUT", "devices_interface_report")
 
-ipf_snapshot = "74fdbde8-a8ec-4f49-8e6f-2fd93244b8fa"
-# ipf_snapshot = "35ae86bd-c32a-4d99-946e-4d124f46a54c"
+ipf_snapshot = "$last"
 
 # Get the current timestamp
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
