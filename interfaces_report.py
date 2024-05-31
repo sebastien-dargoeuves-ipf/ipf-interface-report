@@ -3,13 +3,14 @@ This script extracts the Interfaces information from the Inventory > Interfaces 
 and use it to generate a report to show the interfaces capacity per device.
 """
 
-import csv
-import os
-import datetime
-from dotenv import load_dotenv, find_dotenv
-from ipfabric import IPFClient
 import argparse
+import csv
+import datetime
+import os
+
 import pandas as pd
+from dotenv import find_dotenv, load_dotenv
+from ipfabric import IPFClient
 
 # List of reasons for an interface to be admin down
 INTERFACE_ADMIN_DOWN_REASON = [
@@ -205,16 +206,16 @@ def main():
 
     # Create an IPFClient object
     ipf = IPFClient(base_url=ipf_url, auth=ipf_auth, snapshot_id=ipf_snapshot, verify=ipf_verify)
+
     print("Fetching data", end="", flush=True)
     interfaces_dict, interfaces_json = fetch_interfaces_data(ipf)
     print(f"\r✅ Done - Fetching data for {len(interfaces_json)} interfaces")
+
     print("Processing interfaces data to build the report", end="", flush=True)
     interfaces_report = build_interface_report(interfaces_dict)
-    print(
-        "\r✅ Done - Processing interfaces data to build the report\nGenerating Report...",
-        end="",
-        flush=True,
-    )
+    print("\r✅ Done - Processing interfaces data to build the report", end="", flush=True)
+
+    print("Generating Report...")
     report_file = create_report_file(
         interfaces_report=interfaces_report,
         interfaces_json=interfaces_json,
