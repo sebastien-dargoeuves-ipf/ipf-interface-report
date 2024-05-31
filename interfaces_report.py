@@ -4,9 +4,10 @@ and use it to generate a report to show the interfaces capacity per device.
 """
 
 import csv
-import os
 import datetime
-from dotenv import load_dotenv, find_dotenv
+import os
+
+from dotenv import find_dotenv, load_dotenv
 from ipfabric import IPFClient
 
 # List of reasons for an interface to be admin down
