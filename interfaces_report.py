@@ -128,11 +128,11 @@ with pd.ExcelWriter(f"{report_output}.xlsx") as writer:
     df_intf_raw.to_excel(writer, sheet_name='intf_raw_data', index=False)
 print(f"\r✅ Done - Generating Excel Report, saved to `{report_output}.xlsx`")
 
-# Export the data to a CSV file
-print("Generating CSV Report...", end="", flush=True)
-with open(f"{report_output}.csv", "w", newline="") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=interfaces_report[0].keys())
-    writer.writeheader()
-    for item in interfaces_report:
-        writer.writerow(item)
-print(f"\r✅ Done - Generating the CSV report, saved to `{report_output}.csv`")
+# # Export the data to a CSV file
+# print("Generating CSV Report...", end="", flush=True)
+# with open(f"{report_output}.csv", "w", newline="") as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=interfaces_report[0].keys())
+#     writer.writeheader()
+#     for item in interfaces_report:
+#         writer.writerow(item)
+# print(f"\r✅ Done - Generating CSV report, saved to `{report_output}.csv`")
