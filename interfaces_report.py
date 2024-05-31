@@ -93,6 +93,8 @@ for hostname, data in interfaces_dict.items():
         [i for i in data["interfaces"] if i.get("reason") is not None and "err" in i.get("reason", "")]
     )
 
+    sum_interfaces_used = interfaces_l1up_l2up + interfaces_l1l2unknown + interfaces_l1up_l2down
+    sum_interfaces_unused = interfaces_l1down_l2down # admin_down and err_disabled are already l1&l2 down
     interfaces_report.append(
         {
             "hostname": hostname,
@@ -105,13 +107,10 @@ for hostname, data in interfaces_dict.items():
             "L1 and l2 unknown": interfaces_l1l2unknown,
             "admin-down": interfaces_admin_down,
             "err-disabled": interfaces_err_disabled,
-            "port utilisation (%)": round(
-                ((interfaces_l1up_l2up + interfaces_l1l2unknown) / interfaces_total) * 100,
-                2,
-            )
+            "port utilisation (%)": round((sum_interfaces_used / interfaces_total) * 100, 2)
             if interfaces_total > 0
             else 0,
-            "port availability (%)": round((interfaces_l1down_l2down / interfaces_total) * 100, 2)
+            "port availability (%)": round((sum_interfaces_unused / interfaces_total) * 100, 2)
             if interfaces_total > 0
             else 0,
         }
