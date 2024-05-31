@@ -11,8 +11,8 @@ This script generates a report on network interfaces. It excludes certain types 
 
 The script uses the following environment variables:
 
-- `IPF_URL_TS`: The URL of the IP Fabric instance.
-- `IPF_TOKEN_TS`: The authentication token for IP Fabric.
+- `IPF_URL`: The URL of the IP Fabric instance.
+- `IPF_TOKEN`: The authentication token for IP Fabric.
 - `IPF_VERIFY`: Whether to verify the SSL certificate of the IP Fabric instance. This should be a boolean value (`True` or `False`). Default is `False`.
 - `REPORT_OUTPUT`: The name of the output CSV file. Default is `devices_interface_report.csv`.
 
